@@ -1,0 +1,91 @@
+<div class="container mt-4 mb-5">
+  <h2 class="mb-4">Liste des Suggestions</h2>
+  <div class="mb-4">
+    <div class="input-group">
+      <span class="input-group-text">
+        <i class="bi bi-search"></i> 🔍
+      </span>
+      <input 
+        type="text" 
+        class="form-control" 
+        placeholder="Rechercher par titre ou catégorie..."
+        [(ngModel)]="searchTerm">
+      <button 
+        class="btn btn-outline-secondary" 
+        type="button"
+        *ngIf="searchTerm"
+        (click)="searchTerm = ''">
+        Effacer
+      </button>
+    </div>
+    <small class="text-muted">
+      {{ getFilteredSuggestions().length }} suggestion(s) trouvée(s)
+    </small>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3" *ngFor="let suggestion of getFilteredSuggestions()">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <h5 class="card-title">{{ suggestion.title }}</h5>
+            <span [ngClass]="getStatusClass(suggestion.status)">
+              {{ getStatusText(suggestion.status) }}
+            </span>
+          </div>
+          
+          <p class="card-text text-muted">{{ suggestion.description }}</p>
+          
+          <div class="mb-2">
+            <span class="badge bg-info">{{ suggestion.category }}</span>
+            <small class="text-muted ms-2">
+              {{ suggestion.date | date: 'dd/MM/yyyy' }}
+            </small>
+          </div>
+
+          <div class="d-flex align-items-center">
+            <span class="me-3">
+              <i class="bi bi-heart-fill text-danger"></i> ❤️
+              <strong>{{ suggestion.nbLikes }}</strong> likes
+            </span>
+          </div>
+        </div>
+
+        <div class="card-footer bg-transparent" *ngIf="suggestion.status !== 'refusee'">
+          <div class="d-flex gap-2">
+            <button 
+              class="btn btn-outline-primary btn-sm flex-fill"
+              (click)="incrementLikes(suggestion)">
+              <i class="bi bi-hand-thumbs-up"></i> 👍 Like
+            </button>
+            <button 
+              class="btn btn-outline-warning btn-sm flex-fill"
+              (click)="addToFavorites(suggestion)">
+              <i class="bi bi-star"></i> ⭐ Favoris
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="alert alert-info" *ngIf="getFilteredSuggestions().length === 0">
+    Aucune suggestion ne correspond à votre recherche.
+  </div>
+
+  
+  <div class="mt-5" *ngIf="favoritesList.length > 0">
+    <h3 class="mb-3">Mes Favoris ({{ favoritesList.length }})</h3>
+    <div class="row">
+      <div class="col-md-4 mb-3" *ngFor="let fav of favoritesList">
+        <div class="card border-warning">
+          <div class="card-body">
+            <h6 class="card-title">{{ fav.title }}</h6>
+            <small class="text-muted">{{ fav.category }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

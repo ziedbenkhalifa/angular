@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { Suggestion } from '../../models/suggestion';
+import { Suggestion } from '../../../models/suggestion';
 
 @Component({
-  selector: 'app-list-suggestion',
-  templateUrl: './list-suggestion.component.html',
-  styleUrls: ['./list-suggestion.component.css']
+  selector: 'app-suggestion-list',
+  templateUrl: './suggestion-list.component.html',
+  styleUrls: ['./suggestion-list.component.css']
 })
-export class ListSuggestionComponent {
+export class SuggestionListComponent {
+  // Gardez tout le code existant du ListSuggestionComponent
   suggestions: Suggestion[] = [
     {
       id: 1,
@@ -47,16 +48,12 @@ export class ListSuggestionComponent {
   ];
 
   favoritesList: Suggestion[] = [];
-
- 
   searchTerm: string = '';
 
-  
   incrementLikes(suggestion: Suggestion): void {
     suggestion.nbLikes++;
   }
 
-  
   addToFavorites(suggestion: Suggestion): void {
     const exists = this.favoritesList.find(s => s.id === suggestion.id);
     if (!exists) {
@@ -67,7 +64,6 @@ export class ListSuggestionComponent {
     }
   }
 
-  
   getFilteredSuggestions(): Suggestion[] {
     if (!this.searchTerm) {
       return this.suggestions;
@@ -80,7 +76,6 @@ export class ListSuggestionComponent {
     );
   }
 
- 
   getStatusClass(status: string): string {
     switch(status) {
       case 'acceptee': return 'badge bg-success';
@@ -89,7 +84,6 @@ export class ListSuggestionComponent {
       default: return 'badge bg-secondary';
     }
   }
-
 
   getStatusText(status: string): string {
     switch(status) {

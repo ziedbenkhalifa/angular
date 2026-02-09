@@ -63,6 +63,11 @@
               (click)="addToFavorites(suggestion)">
               <i class="bi bi-star"></i> ⭐ Favoris
             </button>
+                <button 
+      class="btn btn-outline-info btn-sm flex-fill"
+      [routerLink]="['/suggestions', suggestion.id]">
+      🔍 Détails
+    </button>
           </div>
         </div>
       </div>

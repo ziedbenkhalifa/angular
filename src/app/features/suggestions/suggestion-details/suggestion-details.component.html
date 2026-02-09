@@ -1,0 +1,85 @@
+<div class="container mt-4" *ngIf="suggestion">
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+     
+      <button class="btn btn-outline-secondary mb-4" (click)="goBack()">
+        ⬅️ Retour à la liste
+      </button>
+
+      
+      <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+          <h3 class="mb-0">📋 Détails de la suggestion</h3>
+        </div>
+        
+        <div class="card-body p-4">
+        
+          <div class="d-flex justify-content-between align-items-start mb-4">
+            <h2 class="card-title">{{ suggestion.title }}</h2>
+            <span [ngClass]="getStatusClass(suggestion.status)" class="fs-5">
+              {{ getStatusText(suggestion.status) }}
+            </span>
+          </div>
+
+          
+          <div class="mb-4">
+            <h5 class="text-muted">Description</h5>
+            <p class="lead">{{ suggestion.description }}</p>
+          </div>
+
+          <!-- Informations supplémentaires -->
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <div class="info-box">
+                <strong>📁 Catégorie</strong>
+                <p class="mb-0">
+                  <span class="badge bg-info fs-6">{{ suggestion.category }}</span>
+                </p>
+              </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+              <div class="info-box">
+                <strong>📅 Date de soumission</strong>
+                <p class="mb-0">{{ suggestion.date | date: 'dd/MM/yyyy' }}</p>
+              </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+              <div class="info-box">
+                <strong>❤️ Likes</strong>
+                <p class="mb-0 text-danger fs-4">
+                  <strong>{{ suggestion.nbLikes }}</strong>
+                </p>
+              </div>
+            </div>
+          </div>
+
+        
+          <div class="mt-4 p-3 bg-light rounded">
+            <small class="text-muted">
+              <strong>ID de la suggestion :</strong> #{{ suggestion.id }}
+            </small>
+          </div>
+        </div>
+
+        <div class="card-footer text-center">
+          <button class="btn btn-primary btn-lg" (click)="goBack()">
+            Retour à la liste des suggestions
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container mt-4" *ngIf="!suggestion">
+  <div class="alert alert-warning">
+    <h4>Suggestion non trouvée</h4>
+    <p>La suggestion avec l'ID {{ suggestionId }} n'existe pas.</p>
+    <button class="btn btn-primary" (click)="goBack()">
+      Retour à la liste
+    </button>
+  </div>
+</div>
